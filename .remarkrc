@@ -1,0 +1,8 @@
+{
+  "plugins": {
+    "lint": {
+      "external": ["./index.js"],
+      "no-trailing-spaces": true
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "remark-heroku-example-command",
+  "version": "1.0.0",
+  "author": "Matthew Origer",
+  "repository": "",
+  "license": "ISC",
+  "dependencies": {
+    "dedent": "^0.7.0",
+    "jest": "^20.0.4",
+    "link-check": "^4.1.0",
+    "remark": "^8.0.0",
+    "remark-lint": "^5.2.0",
+    "remark-lint-no-dead-urls": "^0.2.0",
+    "unified-lint-rule": "^1.0.1",
+    "unist-util-is": "^2.1.1",
+    "unist-util-visit": "^1.1.1"
+  },
+  "scripts": {
+    "start": "remark ."
+  },
+  "devDependencies": {
+    "remark-cli": "^2.1.0",
+    "remark-lint": "^5.2.0"
+  }
+}
