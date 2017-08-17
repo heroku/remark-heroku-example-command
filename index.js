@@ -1,66 +1,36 @@
-let Is = require('unist-util-is')
+'use strict'
+
 const rule = require('unified-lint-rule')
 const visit = require('unist-util-visit')
-const linkCheck = require('link-check')
-const isRelativeUrl = require('is-relative-url')
+const findAfter = require('unist-util-find-after')
+const visitAllAfter = require('./visit_all_after')
 
 const defaultCache = {}
 const pending = new Map()
 
-function checkForExample (ast, file, options) {
-  let baseUrl
-  if (typeof options === 'string') {
-    baseUrl = options
-    options = {}
-  } else {
-    options = options || {}
-    baseUrl = options.baseUrl
-  }
-  const cache = options.cache || defaultCache
+async function commandsHaveExamples (ast, file, options) {
 
-  const warn = node => {
-    file.message(`Link to ${node.url} is dead`, node)
+  let headingFound = false
+  let exampleFound = false
+
+  const headingOrExample = async (subNode) => {
+    if(exampleFound || headingFound) return
+    if(subNode.depth === 3 && subNode !== node) headingFound = true
+    if(subNode.depth === 4) exampleFound = true
   }
 
-  // Ensure there's at least one Promise to resolve
-  const promises = [Promise.resolve()]
-  const validate = node => {
-    let url = node.url
-    if (!url) return
+  const validate = async (node) => {
+    if(node.depth !== 3) return
+    headingFound = false
+    exampleFound = false
 
-    if (cache[url] !== undefined) {
-      if (cache[url] !== 'alive') warn(node)
-      return
-    }
-
-    if (pending.has(url)) {
-      promises.push(
-        pending.get(url).then(status => {
-          if (status !== 'alive') warn(node)
-        })
-      )
-      return
-    }
-
-    if (isRelativeUrl(url) && !baseUrl) return
-    const checkUrl = new Promise((resolve, reject) => {
-      linkCheck(url, {baseUrl}, (error, result) => {
-        if (error) return reject(error)
-        if (result.status !== 'alive') {
-          warn(node)
-        }
-        cache[url] = result.status
-        pending.delete(url)
-        resolve(result.status)
-      })
-    })
-    pending.set(url, checkUrl)
-    promises.push(checkUrl)
+    visitAllAfter(ast, node, 'heading', headingOrExample)
+    if(exampleFound === false)
+      file.message('Command has no usage example', node)
   }
 
-  visit(ast, 'heading', validate)
+  await visit(ast, 'heading', validate)
 
-  return Promise.all(promises)
 }
 
-module.exports = rule('remark-heroku-example-command', checkForExample )
+module.exports = rule('remark-lint:no-dead-urls', commandsHaveExamples)

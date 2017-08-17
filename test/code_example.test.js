@@ -15,17 +15,11 @@
 
 const remark = require('remark')
 const fs = require('fs')
-const dedent = require('dedent')
-const plugin = require('../sample_index')
-const heroku_plugin = require('../index')
-const linkCheck = require('link-check')
+const plugin = require('../index')
 
-jest.mock('link-check', () => {
-  return jest.fn()
-})
 
-const processMarkdown = (md, baseUrl) => {
-  return remark().use(plugin, baseUrl).process(md)
+const processMarkdown = async (md) => {
+  return remark().use(plugin).process(md)
 }
 
 let markdown = null
@@ -33,14 +27,19 @@ beforeAll(() => {
   markdown = fs.readFileSync('./test/generated_docs.md', 'utf8')
 })
 
-describe('heroku stuff', () => {
-  test('catches a command', () => {
-    const lint = processMarkdown(markdown)
+describe('heroku stuff', async () => {
+  test('it adds an error when there are no examples', async () => {
+    markdown = fs.readFileSync('./test/two_commands_no_examples.md', 'utf8')
 
-    return lint.then(vFile => {
-      expect(true).toBe(true)
-      // expect(vFile.messages.length).toBe(0)
-    })
+    const lint = await processMarkdown(markdown)
+    expect(lint.messages.length).toBe(2)
+    expect(lint.messages[0].message).toBe('Command has no usage example')
+  })
+  test('it does not add error messages when one is present', async () => {
+    markdown = fs.readFileSync('./test/command_with_example.md', 'utf8')
+
+    const lint = await processMarkdown(markdown)
+    expect(lint.messages.length).toBe(0)
   })
 })
 
