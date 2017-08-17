@@ -1,8 +1,11 @@
 {
   "name": "remark-heroku-example-command",
   "version": "1.0.0",
-  "author": "Matthew Origer <moriger@heroku.com>",
-  "repository": "",
+  "author": "Matthew Origer <cli-squad@heroku.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KarateCowboy/remark-heroku-example-command.git"
+  },
   "license": "ISC",
   "dependencies": {
     "jest": "^20.0.4",
@@ -15,10 +18,21 @@
     "unist-util-visit": "^1.1.1"
   },
   "scripts": {
-    "start": "remark ."
+    "start": "remark .",
+    "build": "babel src -d lib"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "remark-cli": "^2.1.0",
     "remark-lint": "^5.2.0"
-  }
+  },
+  "description": "A remark-lint rule to make sure command headings have an example.",
+  "main": "lib/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "bugs": {
+    "url": "https://github.com/KarateCowboy/remark-heroku-example-command/issues"
+  },
+  "homepage": "https://github.com/KarateCowboy/remark-heroku-example-command#readme"
 }
