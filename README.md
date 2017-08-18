@@ -1,20 +1,3 @@
-# `no-trailing-spaces` external rule for [remark-lint](https://github.com/wooorm/remark-lint)
+Rule for Heroku CLI documentation. Require all commands to have an example
 
-A remark-lint external rule to warn about any trailing whitespace.
 
-```
-`·` represents ` `.
-
-<!-- Invalid (2 warnings) -->
-
-# Title··
-··
-Hello world!
-
-<!-- Valid -->
-
-# Title
-
-Hello world!
-
-```

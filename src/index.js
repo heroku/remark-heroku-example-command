@@ -3,7 +3,6 @@ const visit = require('unist-util-visit')
 const visitAllAfter = require('./visit_all_after')
 
 async function commandsHaveExamples (ast, file) {
-
   let headingFound = false
   let exampleFound = false
 
@@ -19,11 +18,10 @@ async function commandsHaveExamples (ast, file) {
     exampleFound = false
 
     visitAllAfter(ast, node, 'heading', headingOrExample)
-    if (exampleFound === false)
-      file.message('Command has no usage example', node)
+    if (exampleFound === false) { file.message('Command has no usage example', node) }
   }
 
   await visit(ast, 'heading', validate)
 }
 
-module.exports = rule('remark-lint:no-dead-urls', commandsHaveExamples)
+module.exports = rule('remark-lint:commands-have-examples', commandsHaveExamples)
