@@ -9,7 +9,7 @@ async function commandsHaveExamples (ast, file) {
   const headingOrExample = async (subNode) => {
     if (exampleFound || headingFound) return
     if (subNode.depth === 3 && subNode !== node) headingFound = true
-    if (subNode.depth === 4) exampleFound = true
+    if (subNode.depth === 4 && subNode.children[0].value.includes('Example')) exampleFound = true
   }
 
   const validate = async (node) => {
