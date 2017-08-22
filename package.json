@@ -1,6 +1,6 @@
 {
   "name": "remark-heroku-example-command",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Matthew Origer <cli-squad@heroku.com>",
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
     "unist-util-visit": "^1.1.1"
   },
   "scripts": {
-		"test": "./node_modules/.bin/jest",
+    "test": "./node_modules/.bin/jest",
     "start": "remark .",
     "build": "babel src -d lib"
   },
