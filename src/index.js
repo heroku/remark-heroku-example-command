@@ -6,9 +6,9 @@ async function commandsHaveExamples (ast, file) {
   let headingFound = false
   let exampleFound = false
 
-  const headingOrExample = async (subNode) => {
+  const headingOrExample = async (subNode, index) => {
     if (exampleFound || headingFound) return
-    if (subNode.depth === 3 && subNode !== node) headingFound = true
+    if (subNode.depth === 3 && index !== 0) headingFound = true
     if (subNode.depth === 4 && subNode.children[0].value.includes('Example')) exampleFound = true
   }
 
