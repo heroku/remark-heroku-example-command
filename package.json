@@ -4,7 +4,7 @@
   "author": "Matthew Origer <cli-squad@heroku.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KarateCowboy/remark-heroku-example-command.git"
+    "url": "git+https://github.com/heroku/remark-heroku-example-command.git"
   },
   "license": "ISC",
   "dependencies": {
@@ -33,7 +33,10 @@
     "test": "test"
   },
   "bugs": {
-    "url": "https://github.com/KarateCowboy/remark-heroku-example-command/issues"
+    "url": "https://github.com/heroku/remark-heroku-example-command/issues"
   },
-  "homepage": "https://github.com/KarateCowboy/remark-heroku-example-command#readme"
+  "homepage": "https://github.com/heroku/remark-heroku-example-command#readme",
+  "files": [
+    "lib"
+  ]
 }
