@@ -1,6 +1,6 @@
 {
   "name": "remark-heroku-example-command",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": "Matthew Origer <cli-squad@heroku.com>",
   "repository": {
     "type": "git",
